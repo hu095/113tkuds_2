@@ -1,30 +1,14 @@
-import java.util.Arrays;
 
 public class MatrixCalculator {
-    public static void main(String[] args) {
-        int[][] A = {
-            {1, 2},
-            {3, 4}
-        };
-        int[][] B = {
-            {5, 6},
-            {7, 8}
-        };
-
-        System.out.println("=== 矩陣加法 ===");
-        printMatrix(addMatrices(A, B));
-
-        System.out.println("\n=== 矩陣乘法 ===");
-        printMatrix(multiplyMatrices(A, B));
-
-        System.out.println("\n=== 矩陣轉置 ===");
-        printMatrix(transposeMatrix(B));
-
-        System.out.println("\n=== 矩陣最大值與最小值 ===");
-        findMinMax(A);
+    public static void printMatrix(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int val : row)
+                System.out.printf("%4d", val);
+            System.out.println();
+        }
     }
 
-    public static int[][] addMatrices(int[][] a, int[][] b) {
+    public static int[][] add(int[][] a, int[][] b) {
         int[][] result = new int[a.length][a[0].length];
         for (int i = 0; i < a.length; i++)
             for (int j = 0; j < a[0].length; j++)
@@ -32,7 +16,7 @@ public class MatrixCalculator {
         return result;
     }
 
-    public static int[][] multiplyMatrices(int[][] a, int[][] b) {
+    public static int[][] multiply(int[][] a, int[][] b) {
         int[][] result = new int[a.length][b[0].length];
         for (int i = 0; i < a.length; i++)
             for (int j = 0; j < b[0].length; j++)
@@ -41,27 +25,56 @@ public class MatrixCalculator {
         return result;
     }
 
-    public static int[][] transposeMatrix(int[][] matrix) {
-        int[][] result = new int[matrix[0].length][matrix.length];
+    public static int[][] transpose(int[][] matrix) {
+        int[][] t = new int[matrix[0].length][matrix.length];
         for (int i = 0; i < matrix.length; i++)
             for (int j = 0; j < matrix[0].length; j++)
-                result[j][i] = matrix[i][j];
-        return result;
+                t[j][i] = matrix[i][j];
+        return t;
     }
 
-    public static void findMinMax(int[][] matrix) {
-        int max = matrix[0][0];
-        int min = matrix[0][0];
-        for (int[] row : matrix)
+    public static int[] findMinMax(int[][] matrix) {
+        int min = matrix[0][0], max = matrix[0][0];
+        for (int[] row : matrix) {
             for (int val : row) {
-                if (val > max) max = val;
                 if (val < min) min = val;
+                if (val > max) max = val;
             }
-        System.out.println("最大值：" + max + "，最小值：" + min);
+        }
+        return new int[]{min, max};
     }
 
-    public static void printMatrix(int[][] matrix) {
-        for (int[] row : matrix)
-            System.out.println(Arrays.toString(row));
+    public static void main(String[] args) {
+    int[][] a = {
+        {1, 2},
+        {3, 4}
+    };
+    int[][] b = {
+        {5, 6},
+        {7, 8}
+    };
+
+    System.out.println("矩陣 A:");
+    printMatrix(a);
+    System.out.println("矩陣 B:");
+    printMatrix(b);
+
+    System.out.println("\n矩陣加法 A + B:");
+    printMatrix(add(a, b));
+
+    System.out.println("\n矩陣乘法 A * B:");
+    printMatrix(multiply(a, b));
+
+    System.out.println("\n矩陣轉置 A:");
+    printMatrix(transpose(a));
+
+    System.out.println("\n矩陣轉置 B:");
+    printMatrix(transpose(b));  // 加這一行即可印出 B 的轉置
+
+    int[] minMaxA = findMinMax(a);
+    int[] minMaxB = findMinMax(b);
+
+    System.out.printf("\nA 的最小值：%d，最大值：%d\n", minMaxA[0], minMaxA[1]);
+    System.out.printf("B 的最小值：%d，最大值：%d\n", minMaxB[0], minMaxB[1]);
     }
 }

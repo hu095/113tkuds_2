@@ -1,59 +1,111 @@
+import java.util.Scanner;
+
 public class TicTacToeBoard {
-    static char[][] board = new char[3][3];
+    private int[][] board;
+    private int currentPlayer;
 
-    public static void main(String[] args) {
-        initializeBoard();
-        makeMove(0, 0, 'X');
-        makeMove(1, 1, 'O');
-        makeMove(0, 1, 'X');
-        makeMove(2, 2, 'O');
-        makeMove(0, 2, 'X');
-        printBoard();
-
-        if (checkWin('X')) System.out.println("X 獲勝！");
-        else if (checkWin('O')) System.out.println("O 獲勝！");
-        else if (isBoardFull()) System.out.println("平手！");
-        else System.out.println("遊戲尚未結束");
+    public TicTacToeBoard() {
+        board = new int[3][3]; // 0 表示空格, 1 表示玩家1, 2 表示玩家2
+        currentPlayer = 1;
     }
 
-    public static void initializeBoard() {
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++)
-                board[i][j] = ' ';
-    }
-
-    public static boolean makeMove(int row, int col, char player) {
-        if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == ' ') {
-            board[row][col] = player;
-            return true;
+    // 顯示棋盤
+    public void printBoard() {
+        System.out.println("目前棋盤：");
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                char mark = ' ';
+                if (board[i][j] == 1) mark = 'O';
+                else if (board[i][j] == 2) mark = 'X';
+                System.out.print(" " + mark + " ");
+                if (j < 2) System.out.print("|");
+            }
+            System.out.println();
+            if (i < 2) System.out.println("---+---+---");
         }
-        System.out.println("無效位置！");
-        return false;
     }
 
-    public static boolean checkWin(char player) {
-        for (int i = 0; i < 3; i++)
-            if ((board[i][0] == player && board[i][1] == player && board[i][2] == player) ||  // 行
-                (board[0][i] == player && board[1][i] == player && board[2][i] == player))    // 列
-                return true;
+    // 根據 1~9 放置棋子
+    public boolean placeMark(int position) {
+        if (position < 1 || position > 9) {
+            System.out.println("無效位置！請輸入 1 到 9。");
+            return false;
+        }
 
-        return (board[0][0] == player && board[1][1] == player && board[2][2] == player) ||   // 對角線
-               (board[0][2] == player && board[1][1] == player && board[2][0] == player);     // 反對角
-    }
+        int row = (position - 1) / 3;
+        int col = (position - 1) % 3;
 
-    public static boolean isBoardFull() {
-        for (char[] row : board)
-            for (char cell : row)
-                if (cell == ' ') return false;
+        if (board[row][col] != 0) {
+            System.out.println("這個位置已被佔用！");
+            return false;
+        }
+
+        board[row][col] = currentPlayer;
         return true;
     }
 
-    public static void printBoard() {
-        for (char[] row : board) {
-            for (char cell : row)
-                System.out.print("|" + cell);
-            System.out.println("|");
+    // 切換玩家
+    public void switchPlayer() {
+        currentPlayer = (currentPlayer == 1) ? 2 : 1;
+    }
+
+    // 檢查是否有人獲勝
+    public boolean checkWin() {
+        for (int i = 0; i < 3; i++) {
+            if (board[i][0] != 0 &&
+                board[i][0] == board[i][1] &&
+                board[i][1] == board[i][2]) return true;
+
+            if (board[0][i] != 0 &&
+                board[0][i] == board[1][i] &&
+                board[1][i] == board[2][i]) return true;
         }
+
+        if (board[0][0] != 0 &&
+            board[0][0] == board[1][1] &&
+            board[1][1] == board[2][2]) return true;
+
+        if (board[0][2] != 0 &&
+            board[0][2] == board[1][1] &&
+            board[1][1] == board[2][0]) return true;
+
+        return false;
+    }
+
+    // 檢查是否平手
+    public boolean isDraw() {
+        for (int[] row : board)
+            for (int cell : row)
+                if (cell == 0) return false;
+        return true;
+    }
+
+    // 主程式
+    public static void main(String[] args) {
+        TicTacToeBoard game = new TicTacToeBoard();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("井字遊戲開始！玩家1是 O，玩家2是 X。");
+        System.out.println("請使用數字 1 到 9 表示位置：");
+        System.out.println(" 1 | 2 | 3\n---+---+---\n 4 | 5 | 6\n---+---+---\n 7 | 8 | 9");
+
+        while (true) {
+            game.printBoard();
+            System.out.println("輪到玩家 " + game.currentPlayer + "，請輸入位置（1-9）：");
+            int pos = scanner.nextInt();
+
+            if (game.placeMark(pos)) {
+                if (game.checkWin()) {
+                    game.printBoard();
+                    System.out.println("玩家 " + game.currentPlayer + " 獲勝！");
+                    break;
+                } else if (game.isDraw()) {
+                    game.printBoard();
+                    System.out.println("平手！");
+                    break;
+                }
+                game.switchPlayer();
+            }
+        }
+        scanner.close();
     }
 }
-

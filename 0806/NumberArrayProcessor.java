@@ -1,62 +1,88 @@
 import java.util.*;
 
 public class NumberArrayProcessor {
-    public static void main(String[] args) {
-        int[] arr1 = {1, 2, 2, 3, 4, 4, 5};
-        int[] arr2 = {1, 3, 5, 7, 9};
 
-        System.out.println("=== 移除重複元素 ===");
-        System.out.println(Arrays.toString(removeDuplicates(arr1)));
-
-        System.out.println("\n=== 合併兩個排序陣列 ===");
-        System.out.println(Arrays.toString(mergeSortedArrays(arr1, arr2)));
-
-        System.out.println("\n=== 出現頻率最高的元素 ===");
-        System.out.println("出現最多的值為：" + findMostFrequent(arr1));
-
-        System.out.println("\n=== 陣列分割 ===");
-        splitArray(arr1);
-    }
-
+    // 移除陣列中的重複元素
     public static int[] removeDuplicates(int[] array) {
-        return Arrays.stream(array).distinct().toArray();
-    }
-
-    public static int[] mergeSortedArrays(int[] a, int[] b) {
-        int[] result = new int[a.length + b.length];
-        int i = 0, j = 0, k = 0;
-
-        while (i < a.length && j < b.length)
-            result[k++] = (a[i] < b[j]) ? a[i++] : b[j++];
-        while (i < a.length) result[k++] = a[i++];
-        while (j < b.length) result[k++] = b[j++];
+        Set<Integer> set = new LinkedHashSet<>();
+        for (int num : array) {
+            set.add(num);
+        }
+        int[] result = new int[set.size()];
+        int i = 0;
+        for (int num : set) {
+            result[i++] = num;
+        }
         return result;
     }
 
-    public static int findMostFrequent(int[] array) {
-        Map<Integer, Integer> freq = new HashMap<>();
-        for (int n : array)
-            freq.put(n, freq.getOrDefault(n, 0) + 1);
-        return Collections.max(freq.entrySet(), Map.Entry.comparingByValue()).getKey();
-    }
-
-    public static void splitArray(int[] array) {
-        int sum = Arrays.stream(array).sum();
-        int half = sum / 2;
-
-        List<Integer> part1 = new ArrayList<>();
-        int currentSum = 0;
-
-        for (int i = 0; i < array.length; i++) {
-            if (currentSum + array[i] <= half) {
-                currentSum += array[i];
-                part1.add(array[i]);
+    // 合併兩個已排序的陣列
+    public static int[] mergeSortedArrays(int[] a, int[] b) {
+        int[] result = new int[a.length + b.length];
+        int i = 0, j = 0, k = 0;
+        while (i < a.length && j < b.length) {
+            if (a[i] <= b[j]) {
+                result[k++] = a[i++];
+            } else {
+                result[k++] = b[j++];
             }
         }
+        while (i < a.length) {
+            result[k++] = a[i++];
+        }
+        while (j < b.length) {
+            result[k++] = b[j++];
+        }
+        return result;
+    }
 
-        System.out.println("子陣列 1：" + part1);
-        System.out.println("子陣列 2：" + Arrays.toString(
-            Arrays.stream(array).filter(x -> !part1.contains(x) || part1.remove((Integer) x)).toArray()
-        ));
+    // 找出陣列中出現頻率最高的所有元素
+    public static List<Integer> findMostFrequent(int[] array) {
+        Map<Integer, Integer> freqMap = new HashMap<>();
+        for (int num : array) {
+            freqMap.put(num, freqMap.getOrDefault(num, 0) + 1);
+        }
+
+        int maxFreq = Collections.max(freqMap.values());
+        List<Integer> mostFrequent = new ArrayList<>();
+        for (Map.Entry<Integer, Integer> entry : freqMap.entrySet()) {
+            if (entry.getValue() == maxFreq) {
+                mostFrequent.add(entry.getKey());
+            }
+        }
+        return mostFrequent;
+    }
+
+    // 將陣列分割成兩個相等（或近似相等）的子陣列
+    public static int[][] splitArray(int[] array) {
+        int mid = array.length / 2;
+        int[] firstHalf = Arrays.copyOfRange(array, 0, mid);
+        int[] secondHalf = Arrays.copyOfRange(array, mid, array.length);
+        return new int[][]{firstHalf, secondHalf};
+    }
+
+    public static void main(String[] args) {
+        int[] array1 = {1, 2, 2, 3, 4, 4, 5};
+        int[] array2 = {2, 3, 6, 7};
+
+        System.out.println("原始陣列 array1: " + Arrays.toString(array1));
+        System.out.println("原始陣列 array2: " + Arrays.toString(array2));
+
+        // 移除重複
+        int[] noDuplicates = removeDuplicates(array1);
+        System.out.println("移除重複後: " + Arrays.toString(noDuplicates));
+
+        // 合併已排序陣列
+        int[] merged = mergeSortedArrays(array1, array2);
+        System.out.println("合併後的排序陣列: " + Arrays.toString(merged));
+
+        // 找出最常出現的元素
+        List<Integer> mostFrequent = findMostFrequent(array1);
+        System.out.println("最常出現的元素: " + mostFrequent);
+
+        // 陣列分割
+        int[][] split = splitArray(array1);
+        System.out.println("分割後第一部分: " + Arrays.toString(split[0]));
+        System.out.println("分割後第二部分: " + Arrays.toString(split[1]));
     }
 }
