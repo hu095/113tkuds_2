@@ -1,7 +1,8 @@
 import java.util.*;
 
+
 public class HeapBuilder {
-    private List<Integer> heap;
+    private final List<Integer> heap;
     
     public HeapBuilder(int[] arr) {
         heap = new ArrayList<>();
