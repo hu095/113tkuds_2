@@ -7,5 +7,22 @@
         "midterm"
     ],
     "java.project.referencedLibraries": [],
-    "java.format.settings.url": ".vscode/java-formatter.xml"
+    "java.format.settings.url": ".vscode/java-formatter.xml",
+
+    // ===== 新增部分 =====
+    // 指定 JDK 17 的安裝路徑（請確認實際安裝目錄）
+    "java.jdt.ls.java.home": "C:\\Program Files\\Java\\jdk-17.0.12",
+
+    // 告訴 VS Code 支援的 runtime
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-17",
+            "path": "C:\\Program Files\\Java\\jdk-17.0.12",
+            "default": true
+        }
+    ],
+
+    // 統一使用 UTF-8 編碼，避免 Big5 亂碼
+    "files.encoding": "utf8",
+    "java.compile.encoding": "UTF-8"
 }
