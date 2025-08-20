@@ -1,9 +1,10 @@
 {
     "java.debug.settings.onBuildFailureProceed": true,
     "java.project.sourcePaths": [
+        "0814",
         "0812",
         "0806",
-        "0814"
+        "midterm"
     ],
     "java.project.referencedLibraries": [],
     "java.format.settings.url": ".vscode/java-formatter.xml"
