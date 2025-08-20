@@ -1,10 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-/*
- * Time Complexity: O(n)，每個節點檢查一次
- * Space Complexity: O(h)，遞迴深度
- */
+
 
 public class M10_RBPropertiesCheck {
     static class Node {

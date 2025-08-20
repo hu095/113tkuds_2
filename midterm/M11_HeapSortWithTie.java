@@ -1,11 +1,6 @@
 import java.io.*;
 import java.util.*;
 
-/*
- * Time Complexity: O(n log n)，建堆 O(n)，每次取出 O(log n)
- * Space Complexity: O(n)，存 (score,index) 配對
- */
-
 public class M11_HeapSortWithTie {
     static class Item implements Comparable<Item> {
         int score, idx;
@@ -42,3 +37,12 @@ public class M11_HeapSortWithTie {
         System.out.println(out.toString().trim());
     }
 }
+
+/*
+ * Time Complexity: O(n log n)
+ * 說明：
+ *   • 建堆 O(n)。
+ *   • 取出 n 次，每次調整 O(log n) → O(n log n)。
+ *   • 總合為 O(n log n)。
+ * Space Complexity: O(n)，需存放 n 筆 (score, index) 配對。
+ */

@@ -1,13 +1,5 @@
 import java.io.*;
 
-/*
- * Time Complexity: O(n)
- * 說明：
- *   • 每筆收入只需判斷 4 個級距 → O(1)。
- *   • 共 n 筆輸入資料，總時間為 O(n)。
- *   • 額外空間只用常數變數 → O(1)。
- */
-
 
 public class M04_TieredTaxSimple {
 
@@ -43,3 +35,11 @@ public class M04_TieredTaxSimple {
         System.out.print(out.toString());
     }
 }
+
+/*
+ * Time Complexity: O(n)
+ * 說明：
+ *   • 每筆收入只需判斷 4 個級距 → O(1)。
+ *   • 共 n 筆輸入資料，總時間為 O(n)。
+ *   • 額外空間只用常數變數 → O(1)。
+ */

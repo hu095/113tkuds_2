@@ -1,29 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-/*
- * Time Complexity: O(n log K)
- * 說明：
- *   1) 每讀入一筆商品資料，可能觸發一次堆操作 (offer/poll)，成本 O(log K)。
- *   2) 共 n 筆輸入，因此維護堆的總成本為 O(n log K)。
- *   3) 最後輸出時對 K 筆資料排序，需 O(K log K)，但通常 K << n，可忽略。
- */
 
-/**
- * M03_TopKConvenience
- *
- * 演算法：
- *  - 以大小為 K 的「最小堆」(Min-Heap) 維護 Top-K。
- *  - 比較邏輯：
- *      1) 以 qty（銷量）為主要鍵；qty 越大越「好」。
- *      2) 若 qty 相同，則以 name 字典序較小者為「好」（穩定規則寫在此註解）。
- *  - 插入時：
- *      - 堆未滿：直接加入
- *      - 堆已滿：若新資料「比堆頂更好」，則移除堆頂改放新資料
- *  - 輸出前將堆內容轉為 List，依「qty 降冪、name 升冪」排序後列印。
- *
- * 空間複雜度：O(K)（堆與輸出暫存）
- */
 public class M03_TopKConvenience {
 
     static class Item {
@@ -88,3 +66,11 @@ public class M03_TopKConvenience {
         System.out.print(sb.toString());
     }
 }
+
+/*
+ * Time Complexity: O(n log K)
+ * 說明：
+ *   1) 每讀入一筆商品資料，可能觸發一次堆操作 (offer/poll)，成本 O(log K)。
+ *   2) 共 n 筆輸入，因此維護堆的總成本為 O(n log K)。
+ *   3) 最後輸出時對 K 筆資料排序，需 O(K log K)，但通常 K << n，可忽略。
+ */

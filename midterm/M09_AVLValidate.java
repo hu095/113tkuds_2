@@ -1,11 +1,6 @@
 import java.io.*;
 import java.util.*;
 
-/*
- * Time Complexity: O(n)，每節點檢查 BST 與高度平衡
- * Space Complexity: O(h)，遞迴深度
- */
-
 public class M09_AVLValidate {
     static class Node {
         int val;
@@ -71,3 +66,14 @@ public class M09_AVLValidate {
         System.out.println("Valid");
     }
 }
+
+
+/*
+ * Time Complexity: O(n)
+ * 說明：
+ *   • 建樹過程以層序方式讀入 n 個節點 → O(n)。
+ *   • checkBST 每個節點檢查一次左右界限 → O(n)。
+ *   • checkAVL 每個節點後序遞迴一次 → O(n)。
+ *   • 總合仍為 O(n)。
+ * Space Complexity: O(h)，其中 h 為樹高，主要來自遞迴堆疊。
+ */

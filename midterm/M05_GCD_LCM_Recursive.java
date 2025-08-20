@@ -1,13 +1,5 @@
 import java.io.*;
 
-/*
- * Time Complexity:
- *   • gcd 使用歐幾里得遞迴：O(log(min(a,b)))
- *   • lcm 只需一次除法與乘法：O(1)
- *   • 總合：O(log(min(a,b)))
- * Space Complexity: O(log(min(a,b))) 遞迴深度
- */
-
 public class M05_GCD_LCM_Recursive {
     static long gcd(long a, long b) {
         if (b == 0) return a;
@@ -31,3 +23,12 @@ public class M05_GCD_LCM_Recursive {
         System.out.println("LCM: " + l);
     }
 }
+
+/*
+ * Time Complexity: O(log(min(a,b)))
+ * 說明：
+ *   • 遞迴歐幾里得算法每次取餘數，數值快速縮小，最多執行 O(log(min(a,b))) 次。
+ *   • lcm 僅需一次除法與一次乘法 → O(1)。
+ *   • 總合仍為 O(log(min(a,b)))。
+ * Space Complexity: O(log(min(a,b)))，來自遞迴呼叫堆疊深度。
+ */

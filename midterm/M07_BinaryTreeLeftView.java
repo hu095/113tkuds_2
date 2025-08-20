@@ -1,10 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-/*
- * Time Complexity: O(n)，每個節點最多進出佇列一次
- * Space Complexity: O(n)，BFS 佇列最大寬度
- */
+
 
 public class M07_BinaryTreeLeftView {
     static class Node {

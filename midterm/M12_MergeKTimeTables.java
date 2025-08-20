@@ -1,10 +1,6 @@
 import java.io.*;
 import java.util.*;
 
-/*
- * Time Complexity: O(N log K)，N 為總元素數，K 為列表數
- * Space Complexity: O(K)，優先佇列存 K 個元素
- */
 
 public class M12_MergeKTimeTables {
     static class Node implements Comparable<Node> {

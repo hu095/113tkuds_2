@@ -1,11 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-/*
- * Time Complexity: O(n)，最壞情況需遍歷全部節點
- * 但平均因為剪枝通常 < n
- * Space Complexity: O(h)，遞迴深度
- */
+
 
 public class M08_BSTRangedSum {
     static class Node {
